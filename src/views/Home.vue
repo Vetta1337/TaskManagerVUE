@@ -9,17 +9,23 @@
                 <th>Oppgave</th>
                 <th>Beskrivelse</th>
                 <th>Prioritet</th>
-                <th>ID</th>
                 <th>Detaljer</th>
+                <th>Status</th>
+                <th>Fremgang</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="task in filteredTasks(category.categoryID)" :key="task.taskID">
                 <td>{{ task.taskName }}</td>
                 <td class="task-description">{{ task.description }}</td>
-                <td>{{ task.priority }}</td>
-                <td>{{ task.categoryID }}</td>
+                <td>{{ translateText(task.priority) }}</td>
                 <td><router-link :to="{ name: 'TaskDetail', params: {id: task.taskID}}">Detaljer</router-link> </td>
+                <td>
+                  <div class="progress">
+                    <div class="progress-bar" :style="{width: calculateProgress(task.taskID) + '%'}">{{ calculateProgress(task.taskID).toFixed(0) }} %</div>
+                  </div>
+                </td>
+                <td>{{ translateText(task.status) }}</td>
               </tr>
             </tbody>
           </table>
@@ -38,7 +44,7 @@
       return {
         categories: [],
         tasks: [],
-        SubTasks: [] 
+        SubTasks: [],
       };
     },
     mounted() {
@@ -78,8 +84,22 @@
         });
       },
       filteredTasks(categoryID) {
-        return this.tasks.filter(task => task.categoryID === categoryID)
-      }
+        return this.tasks
+        .filter(task => task.categoryID === categoryID)
+        .sort((a, b) => {
+          return config.priorityOrder[a.priority] - config.priorityOrder[b.priority];
+        });
+      },
+      calculateProgress(taskID) {
+        const subtasks = this.SubTasks.filter(subtask => subtask.taskID === taskID);
+        const completedSubtasks = subtasks.filter(subtask => subtask.status === 'Completed');
+        // Return the percentage of completed subtasks and the number of subtasks
+        return (completedSubtasks.length / subtasks.length) * 100;
+      },
+      translateText(data) {
+        return config.translations[data];
+      },
+
     }
   };
   </script>

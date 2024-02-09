@@ -1,3 +1,16 @@
 {
-    "tsApiUrl": "http://taskmanagerapi.ehalvorsen.no/api"
+    "tsApiUrl": "http://taskmanagerapi.ehalvorsen.no/api",
+    "translations": {
+        "High": "Høy",
+        "Medium": "Middels",
+        "Low": "Lav",
+        "Not Started": "Ikke Startet",
+        "In Progress": "Under arbeid",
+        "Completed": "Ferdig"
+    },
+    "priorityOrder": {
+        "High": 1,
+        "Medium": 2,
+        "Low": 3
+    }
 }

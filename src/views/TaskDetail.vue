@@ -3,10 +3,10 @@
         <h2>{{ task.taskName }}</h2>
         <h4>{{ task.categoryName }}</h4>
         <p><strong>Beskrivelse:</strong> {{ task.description }}</p>
-        <p><strong>Prioritering:</strong> {{ task.priority }}</p>
+        <p><strong>Prioritering:</strong> {{ translateText(task.priority) }}</p>
         <p><strong>Deadline:</strong> {{ formattedDeadline }}</p>
         <p><strong>Kategori:</strong> {{ task.categoryID }}</p>
-        <p><strong>Status:</strong> {{ task.status }}</p>
+        <p><strong>Status:</strong> {{ translateText(task.status) }}</p>
 
         <h3>Underoppgaver</h3>
         <div class="table-responsive">
@@ -19,10 +19,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="subtask in task.subtasks" :key ="subtask.subtaskID">
+                    <tr v-for="subtask in task.subtasks" :key="subtask.subtaskID">
                         <td>{{ subtask.subTaskName }}</td>
                         <td>{{ subtask.description }}</td>
-                        <td>{{ subtask.status }}</td>
+                        <td>{{ translateText(subtask.status) }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -48,26 +48,29 @@ export default {
     methods: {
         fetchTaskDetails(id) {
             axios.get(`${config.tsApiUrl}/tasks/${id}`)
-            .then(response => {
-                console.log('Task:', response.data);
-                this.task = response.data;
-                return axios.get(`${config.tsApiUrl}/categories/${this.task.categoryID}`);
-            })
-            .then (CategoryResponse => {
-                console.log('Category:', CategoryResponse.data);
-                this.task.categoryName = CategoryResponse.data.categoryName;
-                return axios.get(`${config.tsApiUrl}/subtasks/task/${this.task.taskID}`);
-            })
-            .then(SubTaskResponse => {
-                console.log('SubTasks:', SubTaskResponse.data);
-                this.task.subtasks = SubTaskResponse.data;
-            })
-            .catch(error => {
-                console.error('Error fetching task:', error);
-            })
+                .then(response => {
+                    console.log('Task:', response.data);
+                    this.task = response.data;
+                    return axios.get(`${config.tsApiUrl}/categories/${this.task.categoryID}`);
+                })
+                .then(CategoryResponse => {
+                    console.log('Category:', CategoryResponse.data);
+                    this.task.categoryName = CategoryResponse.data.categoryName;
+                    return axios.get(`${config.tsApiUrl}/subtasks/task/${this.task.taskID}`);
+                })
+                .then(SubTaskResponse => {
+                    console.log('SubTasks:', SubTaskResponse.data);
+                    this.task.subtasks = SubTaskResponse.data;
+                })
+                .catch(error => {
+                    console.error('Error fetching task:', error);
+                })
+        },
+        translateText(data) {
+            return config.translations[data];
         }
     },
-    computed : {
+    computed: {
         formattedDeadline() {
             if (!this.task || !this.task.deadline) return '';
 
@@ -86,9 +89,9 @@ export default {
 
 <style scoped>
 .task-detail {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 </style>
