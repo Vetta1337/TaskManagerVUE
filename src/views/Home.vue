@@ -6,11 +6,11 @@
           <table class="table table-bordered table-hover table-fixed">
             <thead class="thead-light">
               <tr>
-                <th>taskName</th>
-                <th>taskDescription</th>
-                <th>taskPriority</th>
-                <th>categoryID</th>
-                <th>Details</th>
+                <th>Oppgave</th>
+                <th>Beskrivelse</th>
+                <th>Prioritet</th>
+                <th>ID</th>
+                <th>Detaljer</th>
               </tr>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                 <td class="task-description">{{ task.description }}</td>
                 <td>{{ task.priority }}</td>
                 <td>{{ task.categoryID }}</td>
-                <td><router-link :to="{ name: 'TaskDetail', params: {id: task.taskID}}">Details</router-link> </td>
+                <td><router-link :to="{ name: 'TaskDetail', params: {id: task.taskID}}">Detaljer</router-link> </td>
               </tr>
             </tbody>
           </table>
