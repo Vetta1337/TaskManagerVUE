@@ -1,34 +1,51 @@
 <template>
-    <div class="task-detail" v-if="task">
-        <h2>{{ task.taskName }}</h2>
-        <h4>{{ task.categoryName }}</h4>
-        <p><strong>Beskrivelse:</strong> {{ task.description }}</p>
-        <p><strong>Prioritering:</strong> {{ translateText(task.priority) }}</p>
-        <p><strong>Deadline:</strong> {{ formattedDeadline }}</p>
-        <p><strong>Kategori:</strong> {{ task.categoryID }}</p>
-        <p><strong>Status:</strong> {{ translateText(task.status) }}</p>
-
-        <h3>Underoppgaver</h3>
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Underoppgave</th>
-                        <th>Beskrivelse</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="subtask in task.subtasks" :key="subtask.subtaskID">
-                        <td>{{ subtask.subTaskName }}</td>
-                        <td>{{ subtask.description }}</td>
-                        <td>{{ translateText(subtask.status) }}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="container mt-5" v-if="task">
+        <div class="card border-0 shadow-sm" style="margin-bottom: 1rem;">
+            <div class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">{{ task.taskName }}</h3>
+                <router-link :to="{name: 'EditTask', params: {id: task.taskID}}" class="btn">
+                    <i class="fa-solid fa-pen-to-square" style="color:#ffffff; font-size: 1.35rem;"></i>
+                </router-link>
+            </div>
+            <div class="card-body">
+                <h5 class="text-muted">{{ task.categoryName }}</h5>
+                <div class="mt-3">
+                    <p><strong>Beskrivelse:</strong> {{ task.description }}</p>
+                    <p><strong>Prioritering:</strong> {{ translateText(task.priority) }}</p>
+                    <p><strong>Deadline:</strong> {{ formattedDeadline }}</p>
+                    <p><strong>Kategori:</strong> {{ task.categoryID }}</p>
+                    <p><strong>Status:</strong> {{ translateText(task.status) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header text-white">
+                <h3 class="mb-0">Underoppgaver</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table mb-0 table-hover table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Oppgave</th>
+                                <th scope="col">Beskrivelse</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="subtask in task.subtasks" :key="subtask.subtaskID">
+                                <td>{{ subtask.subTaskName }}</td>
+                                <td>{{ subtask.description }}</td>
+                                <td>{{ translateText(subtask.status) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </template>
+
 
 <script>
 import config from '../assets/js/config.json';
@@ -87,11 +104,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.task-detail {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-</style>
+<style scoped></style>
+

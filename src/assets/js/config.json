@@ -5,9 +5,19 @@
         "Medium": "Middels",
         "Low": "Lav",
         "Not Started": "Ikke Startet",
-        "In Progress": "Under arbeid",
+        "In Progress": "Under Arbeid",
         "Completed": "Ferdig"
     },
+    "priority": [
+        "High",
+        "Medium",
+        "Low"
+    ],
+    "status": [
+        "Not Started",
+        "In Progress",
+        "Completed"
+    ],
     "priorityOrder": {
         "High": 1,
         "Medium": 2,
