@@ -15,7 +15,7 @@
                         <textarea class="form-control" id="description" v-model="task.description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="priority">Prioritet</label>
+                        <label for="priority">Prioritering</label>
                         <select class="form-control" id="priority" v-model="task.priority">
                             <option v-for="(priorityValue, index) in config.priority" :key="index" :value="priorityValue">{{
                                 translateText(priorityValue) }}</option>
@@ -41,7 +41,7 @@
                                 translateText(statusValue) }}</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Oppdater oppgave</button>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Oppdater oppgave</button>
                 </form>
             </div>
 
@@ -67,7 +67,7 @@
                                     <input type="text" class="form-control" v-model="subtask.subTaskName">
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" v-model="subtask.description">
+                                    <textarea class="form-control" v-model="subtask.description" rows="3"></textarea>
                                 </td>
                                 <td>
                                     <select class="form-control" v-model="subtask.status">
@@ -77,7 +77,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <button class="btn"
+                                    <button style="margin-right: 0.3rem" class="btn" 
                                         :class="{ 'btn-primary': !recentlyUpdatedSubtasks.includes(subtask.subtaskID), 'btn-success': recentlyUpdatedSubtasks.includes(subtask.subtaskID) }"
                                         @click="updateSubTask(subtask)">
                                         Oppdater
