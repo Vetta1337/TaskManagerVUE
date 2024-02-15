@@ -2,8 +2,11 @@
   <div class="container mt-4">
     <div v-for="category in categories" :key="category.categoryID" class="my-3">
       <div class="card border-0 shadow-sm">
-        <div class="card-header text-white">
+        <div class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
           <h3 class="mb-0">{{ category.categoryName }} - {{ category.categoryID }}</h3>
+          <router-link :to="{ name: 'MakeTask', params: { id: category.categoryID } }" class="btn">
+            <i class="fa-solid fa-plus" style="color:#ffffff; font-size: 1.35rem;"></i>
+          </router-link>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -131,5 +134,6 @@ th,
 td {
   word-wrap: break-word;
   /* Ensures content wraps within the fixed column width */
-}</style>
+}
+</style>
   

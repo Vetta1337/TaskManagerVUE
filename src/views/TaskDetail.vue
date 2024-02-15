@@ -3,7 +3,7 @@
         <div class="card border-0 shadow-sm" style="margin-bottom: 1rem;">
             <div class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
                 <h3 class="mb-0">{{ task.taskName }}</h3>
-                <router-link :to="{name: 'EditTask', params: {id: task.taskID}}" class="btn">
+                <router-link :to="{ name: 'EditTask', params: { id: task.taskID } }" class="btn">
                     <i class="fa-solid fa-pen-to-square" style="color:#ffffff; font-size: 1.35rem;"></i>
                 </router-link>
             </div>
@@ -19,8 +19,11 @@
             </div>
         </div>
         <div class="card border-0 shadow-sm">
-            <div class="card-header text-white">
+            <div class="card-header text-white bg-primary d-flex justify-content-between align-items-center">
                 <h3 class="mb-0">Underoppgaver</h3>
+                <router-link :to="{ name: 'EditSubTask', params: { id: this.$route.params.id } }" class="btn">
+                    <i class="fa-solid fa-plus" style="color:#ffffff; font-size: 1.35rem;"></i>
+                </router-link>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -30,6 +33,7 @@
                                 <th scope="col">Oppgave</th>
                                 <th scope="col">Beskrivelse</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Prioritering</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,6 +41,7 @@
                                 <td>{{ subtask.subTaskName }}</td>
                                 <td>{{ subtask.description }}</td>
                                 <td>{{ translateText(subtask.status) }}</td>
+                                <td>{{ translateText(subtask.priority) }}</td>
                             </tr>
                         </tbody>
                     </table>

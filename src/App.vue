@@ -12,15 +12,12 @@
               <router-link class="nav-link" to="/">Hjem</router-link>
             </li>
             <li class="nav-item">
-            <!--  <router-link class="nav-link" to="/about">Test1</router-link> -->
             </li>
-            <!-- Add more navigation links as needed -->
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Component matched by the route will be rendered here -->
     <router-view/>
   </div>
 </template>

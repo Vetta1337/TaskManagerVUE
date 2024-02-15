@@ -42,6 +42,8 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Oppdater oppgave</button>
+                    <button type="button" class="btn btn-danger" style="margin-top: 5px;" @click="deleteTask">Slett
+                        oppgave</button>
                 </form>
             </div>
 
@@ -58,6 +60,7 @@
                                 <th scope="col">Oppgave</th>
                                 <th scope="col">Beskrivelse</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Prioritering</th>
                                 <th scope="col">Handlinger</th>
                             </tr>
                         </thead>
@@ -77,8 +80,13 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <button style="margin-right: 0.3rem" class="btn" 
-                                        :class="{ 'btn-primary': !recentlyUpdatedSubtasks.includes(subtask.subtaskID), 'btn-success': recentlyUpdatedSubtasks.includes(subtask.subtaskID) }"
+                                    <select class="form-control" v-model="subtask.priority">
+                                    <option v-for="(subPriorityValue, index) in config.priority" :key="index" :value="subPriorityValue">{{
+                                        translateText(subPriorityValue) }}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button style="margin-right: 0.3rem" class="btn btn-primary"
                                         @click="updateSubTask(subtask)">
                                         Oppdater
                                     </button>
@@ -114,7 +122,6 @@ export default {
             task: {},
             subtasks: {},
             categories: {},
-            recentlyUpdatedSubtasks: [],
             config: config
         };
     },
@@ -166,6 +173,18 @@ export default {
                     console.log(error.response)
                 });
         },
+        deleteTask() {
+            console.log('Deleting task:', this.task)
+            axios.delete(`${config.tsApiUrl}/tasks/${this.task.taskID}`)
+                .then(response => {
+                    console.log('Task deleted:', response.data);
+                    this.$router.push({ name: 'Home' });
+                })
+                .catch(error => {
+                    console.error('Error deleting task:', error);
+                    console.log(error.response)
+                });
+        },
         updateSubTask(subtask) {
             console.log('Updating subtask:', subtask)
             axios.put(`${config.tsApiUrl}/subtasks/${subtask.subTaskID}`, subtask)
@@ -183,7 +202,6 @@ export default {
                 .then(response => {
                     console.log("Subtask deleted:", response.data)
                     this.task.subtasks = this.task.subtasks.filter(item => item.subtaskID !== subtask.subtaskID);
-                    // refresh the subtasks list
                     this.fetchTaskDetails(this.task.taskID);
                 })
                 .catch(error => {
